@@ -40,20 +40,19 @@
 # define ASSET_NAME_MAX_LEN     16
 # define MARKET_NAME_MAX_LEN    16
 # define SOURCE_MAX_LEN         32
-# define INTERVAL_MAX_LEN       10
+# define INTERVAL_MAX_LEN       16
 
 # define AW_LISTENER_BIND   "seqpacket@/tmp/accessws_listener.sock"
-
-typedef struct depth_merge_cfg {
-    char    *market;
-    int     count;
-    mpd_t   **limit;
-} depth_merge_cfg;
 
 typedef struct depth_limit_cfg {
     int     count;
     int     *limit;
 } depth_limit_cfg;
+
+typedef struct depth_merge_cfg {
+    int     count;
+    mpd_t   **limit;
+} depth_merge_cfg;
 
 struct settings {
     process_cfg         process;
@@ -69,18 +68,19 @@ struct settings {
 
     int                 worker_num;
     char                *auth_url;
+    char                *sign_url;
     double              backend_timeout;
     double              cache_timeout;
 
     double              deals_interval;
     double              price_interval;
+    double              state_interval;
     double              today_interval;
     double              kline_interval;
     double              depth_interval;
 
-    int                 depth_market_count;
-    depth_merge_cfg     *depth_market_lists;
     depth_limit_cfg     depth_limit;
+    depth_merge_cfg     depth_merge;
 };
 
 extern struct settings settings;
